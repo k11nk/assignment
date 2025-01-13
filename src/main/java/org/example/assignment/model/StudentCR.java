@@ -25,5 +25,10 @@ public class StudentCR {
 
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime changedDate;
+
+    public void setChangedDate(LocalDateTime changedDate) {
+    }
+
+
 }
 
