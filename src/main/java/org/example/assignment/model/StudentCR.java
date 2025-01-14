@@ -1,12 +1,12 @@
 package org.example.assignment.model;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
 
 @Data
 @NoArgsConstructor
@@ -23,12 +23,12 @@ public class StudentCR {
     private String beforeChangeValue;
     private String changedBy;
 
-    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "changed_date", nullable = false)
     private LocalDateTime changedDate;
 
+    // Remove or fix the custom setter for changedDate
     public void setChangedDate(LocalDateTime changedDate) {
+        this.changedDate = changedDate;
     }
 
-
 }
-

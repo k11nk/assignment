@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.HashSet;
 import java.util.List;
@@ -107,39 +108,22 @@ public class StudentService {
     }
 
     // Helper method to log changes in STUDENT_CR table
-//    private void logChange(Long studentId, String fieldName, String beforeValue, String afterValue) {
-//        StudentCR studentCR = new StudentCR();
-//        studentCR.setId(studentId);
-//        studentCR.setChangedField(fieldName);
-//        studentCR.setBeforeChangeValue(beforeValue);
-//        studentCR.setChangedValue(afterValue);
-//        studentCR.setChangedBy("Admin");
-//        studentCR.setChangedDate(LocalDate.now().atStartOfDay());
-//        studentCRRepository.save(studentCR);
-//    }
     private void logChange(Long studentId, String fieldName, String beforeValue, String afterValue) {
+        StudentCR studentCR = new StudentCR();
+        studentCR.setId(studentId);
+        studentCR.setChangedField(fieldName);
+        studentCR.setBeforeChangeValue(beforeValue);
+        studentCR.setChangedValue(afterValue);
+        studentCR.setChangedBy("Admin");
+        studentCR.setChangedDate(LocalDateTime.now());
+
+        if (studentCR.getChangedDate() == null) {
+            studentCR.setChangedDate(LocalDateTime.now());
+        }
+
         try {
-            StudentCR studentCR = new StudentCR();
-            studentCR.setId(studentId); // Ensure you're setting the correct student ID
-            studentCR.setChangedField(fieldName);
-            studentCR.setBeforeChangeValue(beforeValue);
-            studentCR.setChangedValue(afterValue);
-            studentCR.setChangedBy("Admin"); // Replace with actual user info if needed
-            studentCR.setChangedDate(LocalDate.now().atStartOfDay()); // Make sure this is correct
-
-            // Debugging logs to help trace values
-            System.out.println("Logging change for student ID: " + studentId);
-            System.out.println("Field: " + fieldName);
-            System.out.println("Before value: " + beforeValue);
-            System.out.println("After value: " + afterValue);
-            System.out.println("Changed by: Admin");
-            System.out.println("Changed date: " + LocalDate.now().atStartOfDay());
-
-            // Save the log in the database
             studentCRRepository.save(studentCR);
-            System.out.println("Change logged successfully");
         } catch (Exception e) {
-            // Log the error if something goes wrong
             System.err.println("Error logging change for student ID: " + studentId);
             e.printStackTrace();
         }
